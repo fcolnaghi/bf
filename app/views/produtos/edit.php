@@ -6,4 +6,4 @@
 
 ?>
 
-show | voltar
+<a href="show.php?id=<?php echo $_GET['id'] ?>">show</a> | <a href="index.php">voltar</a>

@@ -28,7 +28,7 @@
 ?>
 
 <hr>
-<a href="edit.php">editar</a> | <a href="index.php">voltar</a>
+<a href="edit.php?id=<?php echo $_GET["id"]?>">editar</a> | <a href="index.php">voltar</a>
 
 </body>
 </html>

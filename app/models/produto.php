@@ -4,7 +4,8 @@ class Produto {
 	
 	public $id;
 	public $nome;
-	public $descricao; 
+	public $descricao;
+	public $valor;
 	
 	public function all() {
 		
@@ -34,6 +35,7 @@ class Produto {
 				$p->id = $row[0];
 				$p->nome = $row[1];
 				$p->descricao = $row[2];
+				$p->valor = $row[3];
 			}
 			
 			return $p;
