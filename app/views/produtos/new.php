@@ -1,9 +1,18 @@
-<h1>Novo produto</h1>
-
 <?php
-
-	include '_form.php';
-
+include '../../constantes.php';
+require_once ROOT . 'views/template/header.php';
+require_once ROOT . 'views/template/header-menu.php';
+require_once ROOT . 'controllers/produto.php';
 ?>
-
-<a href="index.php">voltar</a> | <a href="/bf">principal</a>
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a href="<?php echo ROOT?>home.php">Home</a></li>
+		<li><a href="<?php echo ROOT?>views/produtos/index.php">Produtos</a></li>
+		<li class="active">Novo produto</li>
+	</ol>
+	<?php include '_form.php'; ?>
+	<a href="index.php" class="label label-warning">voltar</a> | <a href="<?php echo ROOT?>home.php" class="label label-default">principal</a>
+</div>
+<?php
+include ROOT . 'views/template/footer.php';
+?>
