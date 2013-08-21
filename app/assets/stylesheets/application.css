@@ -1,3 +1,15 @@
 h2 {
 	border-bottom: 1px solid #c0c0c0;
 }
+
+body {
+	margin-top: 60px;
+}
+
+.panel-footer .pagination {
+	margin: 0px;
+}
+
+#produtos_paginate a {
+	margin: 0 2px;
+}

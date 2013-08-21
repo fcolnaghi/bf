@@ -1,23 +1,83 @@
 <?php
-	header('Content-Type: text/html; charset=utf-8');
-	include_once "../../controllers/produto.php";
+include '../../constantes.php';
+require_once ROOT . 'views/template/header.php';
+require_once ROOT . 'views/template/header-menu.php';
+require_once ROOT . 'controllers/produto.php';
 ?>
-
-<h1>Listar produtos</h1>
-
-<script type="text/javascript" src="../../assets/javascripts/application.js"></script>
-
-<table>
+<script>
+$(document).ready(function() {
+	$("#produtos").dataTable({
+		"oLanguage": {
+			"sSearch": "Pesquisar por",
+			"sLengthMenu": "Mostrando _MENU_ registros por página",
+			"sZeroRecords": "Nenhum registro encontrado!",
+			"sInfo": "Mostrando _START_ de _END_ em _TOTAL_ registros",
+			"sInfoEmpty": "Mostrando 0 de 0 em 0 registros",
+			"sInfoFiltered": "(Filtrado dos _MAX_ registros)",
+			"oPaginate": {
+				"sFirst": "Primeiro",
+				"sPrevious": "Anterior",
+				"sNext": "Próximo",
+				"sLast": "Último"
+			}
+		},
+		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 5 ] } ],
+		"sPaginationType": "full_numbers"
+	})
+});
+</script>
+<div class="container">
+	<ol class="breadcrumb">
+		<li><a href="<?php echo ROOT?>home.php">Home</a></li>
+		<li class="active">Produtos</li>
+	</ol>
+	<div class="panel">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h5 class="panel-title">Listar produtos</h5>
+			</div>
+			<div class="panel-body">
+				<table id="produtos" class="tablesorter table table-condensed ">
+					<thead>
+						<tr>
+							<th width="90">Código</th>
+							<th width="250">Produto</th>
+							<th>Descrição</th>
+							<th width="150">Preço</th>
+							<th width="80">Qtd.</th>
+							<th width="200">Ações</th>
+						</tr>
+					</thead>
+					
+					<?php
+					
+					$pc = new ProdutoController ();
+					$pc->index ();
+					
+					foreach ( $pc->produtos as $row ) {
+						?>
+					<tr>
+						<td><?php echo $row[0]?></td>
+						<td><?php echo $row[1]?></td>
+						<td><?php echo strlen($row[2]) > 100 ? substr($row[2],0, 100)."..." : $row[2];?></td>
+						<td><?php echo number_format(str_replace(",",".",$row[3]), 2, ',', '.');?></td>
+						<td><?php echo $row[0]?></td>
+						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a> | <a href="edit.php?id=<?php echo $row[0]?>" class="label label-warning">editar</a> | <a href="javascript:destroy('<?php echo $row[0]?>');"
+							class="label label-danger"
+						>excluir</a></td>
+					</tr>
+						<?php
+					}
+					
+					?>
+				</table>
+			</div>
+			<div class="panel-footer">
+				<a href="new.php" class="btn btn-primary">Adicionar novo produto</a>
+			</div>
+		</div>
+	</div>
+</div>
 <?php
-
-	$pc = new ProdutoController();
-		
-	foreach($pc->produtos as $row) {
-		echo "<tr><td>{$row[0]} :: {$row[1]} [<a href='show.php?id={$row[0]}'>show</a>] [<a href='edit.php?id={$row[0]}'>edit</a>] [<a href=javascript:destroy({$row[0]})>destroy</a>]</td></tr>";
-	}
-
+include ROOT . 'views/template/footer.php';
 ?>
-</table>
-
-<hr>
-<a href="new.php">novo produto</a>

@@ -6,13 +6,13 @@ class ProdutoController {
 	
 	public $produto;
 	public $produtos;
-
-	public function __construct() {
-
+	
+	public function index() {
+	
 		$p = new Produto();
-		
+	
 		$this->produtos = $p->all();
-		
+	
 	}
 	
 	public function show($id) {
@@ -23,16 +23,20 @@ class ProdutoController {
 		
 	}
 	
-	public function create() {
-		
+	public function create($produto) {
+		if($id = Produto::save($produto)) {
+			header("Location: edit.php?id=".$id."&msg=".urlencode("Produto incluido com sucesso!"));
+		}
 	}
 	
-	public function update() {
-	
+	public function update($produto) {
+		if(Produto::update($produto)) {
+			header("Location: edit.php?id=".$produto->id."&msg=".urlencode("Produto alterado com sucesso!"));
+		}
 	}
 	
-	public function destroy() {
-	
+	public static function destroy($id) {
+		Produto::destroy($id);
 	}
 	
 }
