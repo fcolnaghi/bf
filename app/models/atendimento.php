@@ -62,7 +62,7 @@ class Atendimento {
 	
 			$db = DB::getInstance();
 			
-			$db->query('delete FROM servico where id = '. $id);
+			$db->query('delete FROM atendimento where id = '. $id);
 			
 		} catch(PDOException $e) {
 			echo $e->getMessage();

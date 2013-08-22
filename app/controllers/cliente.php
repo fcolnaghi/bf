@@ -15,13 +15,13 @@ class ClienteController {
 	
 	public function create($cliente) {
 		if($id = Cliente::save($produto)) {
-			header("Location: edit.php?id=".$id."&msg=".urlencode("Produto incluido com sucesso!"));
+			header("Location: edit.php?id=".$id."&msg=".urlencode("Cliente incluido com sucesso!"));
 		}
 	}
 	
 	public function update($cliente) {
 		if(Cliente::update($cliente)) {
-			header("Location: edit.php?id=".$cliente->id."&msg=".urlencode("Produto alterado com sucesso!"));
+			header("Location: edit.php?id=".$cliente->id."&msg=".urlencode("Cliente alterado com sucesso!"));
 		}
 	}
 	
