@@ -1,3 +1,7 @@
+<?php
+verificaSessao();
+$ops = getUsuarioLogado();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>

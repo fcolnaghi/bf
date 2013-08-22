@@ -1,3 +1,13 @@
+<?php 
+include_once ("constantes.php");
+if ( $_POST ) {
+	if(OperadorController::login( $_POST['usuario'] , $_POST['password'] ) ){
+		header("Location: ".ROOT."home.php");
+	} else {
+		$msg = "Usuário ou Senha inválidos";
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,23 +20,24 @@
 	<div class="container">
 		<div class="row">
 			<div id="legend">
-				<h2>Beautiful Faces</h2>
+				<h2>BeautyFaces</h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-8">
-				<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					Error
-				</div>
-				<form>
+				<?php if (isset($msg)) :?>
+				<div class="alert alert-danger"><?php echo $msg;?></div>
+				<?php endif; ?>
+				<form method="post">
 					<div class="form-group">
-						<label for="email">E-mail</label> <input type="email" class="form-control" id="email" placeholder="entre com seu e-mail">
+						<label for="usuario">Usuário</label>
+						<input type="text" class="form-control" id="usuario" name="usuario" placeholder="entre com seu usuário">
 					</div>
 					<div class="form-group">
-						<label for="password">Senha</label> <input type="password" class="form-control" id="password" placeholder="digite sua senha">
+						<label for="password">Senha</label>
+						<input type="password" class="form-control" name="password" id="password" placeholder="digite sua senha">
 					</div>
-					<button type="submit" class="btn btn-success">Entrar no Sistema</button>
+					<button type="submit" class="btn btn-primary">Entrar no Sistema</button>
 				</form>
 			</div>
 		</div>

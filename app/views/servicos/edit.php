@@ -6,8 +6,8 @@ require_once ROOT . 'views/template/header-menu.php';
 <div class="container">
 	<ol class="breadcrumb">
 		<li><a href="<?php echo ROOT?>home.php">Home</a></li>
-		<li><a href="<?php echo ROOT?>views/produtos/index.php">Produtos</a></li>
-		<li class="active">Editar produto</li>
+		<li><a href="<?php echo ROOT?>views/servicos/index.php">Serviços</a></li>
+		<li class="active">Editar serviço</li>
 	</ol>
 	<?php if (isset($_GET['msg'])) : ?>
 		<div class="alert alert-success"><?php echo urldecode($_GET['msg']);?></div>

@@ -1,26 +1,15 @@
 <?php
-
-include_once "../../models/produto.php";
-
 class ProdutoController {
 	
 	public $produto;
 	public $produtos;
 	
 	public function index() {
-	
-		$p = new Produto();
-	
-		$this->produtos = $p->all();
-	
+		$this->produtos = Produto::all();
 	}
 	
 	public function show($id) {
-		
-		$p = new Produto();
-		
-		$this->produto = $p->unique($id);
-		
+		$this->produto = Produto::unique($id);
 	}
 	
 	public function create($produto) {

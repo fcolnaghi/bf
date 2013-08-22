@@ -1,35 +1,29 @@
 <?php
-
-include_once "../../controllers/produto.php";
-
-$pc = new ProdutoController ();
+$opc = new ProdutoController();
 
 if( isset ( $_POST['id'] )) {
-	
 	$produto = new Produto();
 	
 	$produto->nome = $_POST['nome'];
 	$produto->descricao = $_POST['descricao'];
 	$produto->valor = $_POST['valor'];
-	$produto->qtd = $_POST['qtd'];
+	$produto->qtd_estoque = $_POST['qtd'];
 	
 	if($_POST['id'] != "") {
 		$produto->id = $_POST['id'];
-		$pc->update($produto);
+		$opc->update($produto);
 	} else {
-		$pc->create($produto);
+		$opc->create($produto);
 	}
 }
 
 if (isset ( $_GET["id"] )) {
-	$pc->show ( $_GET ["id"] );
-	$p = $pc->produto;
+	$opc->show( $_GET ["id"] );
+	$p = $opc->produto;
 	$form_title = "Edição de Produto";
-	$action = "";
 } else {
 	$p = new Produto ();
 	$form_title = "Cadastro de Produto";
-	$action = "";
 }
 
 ?>
@@ -52,13 +46,13 @@ if (isset ( $_GET["id"] )) {
 					<label for="nome">Valor</label> <input class="form-control money required" type="text" name="valor" id="valor" value="<?php echo $p->valor; ?>">
 				</div>
 				<div class="form-group col-md-2">
-					<label for="nome">Quantidade</label><input class="form-control qtd required" type="text" name="qtd" id="qtd" value="<?php echo $p->qtd; ?>">
+					<label for="nome">Quantidade</label><input class="form-control qtd required" type="text" name="qtd" id="qtd" value="<?php echo $p->qtd_estoque; ?>">
 				</div>
 			</div>
 			<input type="hidden" name="id" id="id" value="<?php echo $p->id; ?>">
 	</div>
 	<div class="panel-footer">
-		<input type="submit" id="salvar" class="btn btn-success" value="Salvar">
+		<input type="submit" id="salvar" class="btn btn-primary" value="Salvar">
 	</div>
 	</form>
 </div>
