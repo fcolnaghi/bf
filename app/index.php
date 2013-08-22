@@ -11,7 +11,7 @@ if ( $_POST ) {
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<title>bf</title>
+<title>BeautyFaces</title>
 <link href="assets/stylesheets/reset.css" media="all" rel="stylesheet" type="text/css" />
 <link href="assets/stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
 <link href="assets/stylesheets/application.css" media="all" rel="stylesheet" type="text/css" />
