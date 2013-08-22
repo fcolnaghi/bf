@@ -4,7 +4,7 @@
 		<div class="collapse navbar-collapse bs-js-navbar-collapse">
 			
 			<form action="<?php echo ROOT?>views/atendimentos/new.php" method="post" class="navbar-form navbar-left">
-		    	 <button type="sumbit" class="btn btn-success" >Iniciar novo atendimento</button>
+		    	 <button type="sumbit" class="btn btn-success" >Novo atendimento</button>
 		    </form>
 			<ul class="nav navbar-nav">
 				<li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Cadastros <b class="caret"></b></a>
