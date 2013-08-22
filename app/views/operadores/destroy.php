@@ -1,5 +1,5 @@
 <?php
-	ProdutoController::destroy($_GET["id"]);
+	OperadorController::destroy($_GET["id"]);
 	
 	header('Location: index.php');
 ?>

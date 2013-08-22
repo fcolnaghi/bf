@@ -2,7 +2,6 @@
 include '../../constantes.php';
 require_once ROOT . 'views/template/header.php';
 require_once ROOT . 'views/template/header-menu.php';
-require_once ROOT . 'controllers/produto.php';
 ?>
 <script>
 $(document).ready(function() {
@@ -51,17 +50,17 @@ $(document).ready(function() {
 					
 					<?php
 					
-					$pc = new ProdutoController ();
-					$pc->index ();
+					$opc = new ProdutoController();
+					$opc->index();
 					
-					foreach ( $pc->produtos as $row ) {
+					foreach ( $opc->produtos as $row ) {
 						?>
 					<tr>
 						<td><?php echo $row[0]?></td>
 						<td><?php echo $row[1]?></td>
 						<td><?php echo strlen($row[2]) > 100 ? substr($row[2],0, 100)."..." : $row[2];?></td>
 						<td><?php echo number_format(str_replace(",",".",$row[3]), 2, ',', '.');?></td>
-						<td><?php echo $row[0]?></td>
+						<td><?php echo $row[4]?></td>
 						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a> | <a href="edit.php?id=<?php echo $row[0]?>" class="label label-warning">editar</a> | <a href="javascript:destroy('<?php echo $row[0]?>');"
 							class="label label-danger"
 						>excluir</a></td>

@@ -1,11 +1,11 @@
 <?php
 include '../../constantes.php';
-include_once ROOT . 'views/template/header.php';
-include_once ROOT . 'views/template/header-menu.php';
+require_once ROOT . 'views/template/header.php';
+require_once ROOT . 'views/template/header-menu.php';
 ?>
 <script>
 $(document).ready(function() {
-	$("#clientes").dataTable({
+	$("#atendimentos").dataTable({
 		"oLanguage": {
 			"sSearch": "Pesquisar por",
 			"sLengthMenu": "Mostrando _MENU_ registros por página",
@@ -20,7 +20,7 @@ $(document).ready(function() {
 				"sLast": "Último"
 			}
 		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 6 ] } ],
+		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 4 ] } ],
 		"sPaginationType": "full_numbers"
 	})
 });
@@ -28,45 +28,38 @@ $(document).ready(function() {
 <div class="container">
 	<ol class="breadcrumb">
 		<li><a href="<?php echo ROOT?>home.php">Home</a></li>
-		<li class="active">Clientes</li>
+		<li class="active">Atendimentos</li>
 	</ol>
 	<div class="panel">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h5 class="panel-title">Listar clientes</h5>
+				<h5 class="panel-title">Listar atendimentos</h5>
 			</div>
 			<div class="panel-body">
-				<table id="clientes" class="tablesorter table table-condensed ">
+				<table id="atendimentos" class="tablesorter table table-condensed ">
 					<thead>
 						<tr>
 							<th width="90">Código</th>
-							<th width="250">Nome Cliente</th>
-							<th >Tel. Res</th>
-							<th >Tel. Cel</th>
-							<th >Tel. Com</th>
-							<th  width="150">E-mail</th>
-							<th width="200">Ações</th>
+							<th>Cliente</th>
+							<th width="150">Data Atend.</th>
+							<th width="150">Total</th>
+							<th width="150">Ações</th>
 						</tr>
 					</thead>
 					
 					<?php
 					
-					$opc = new ClienteController();
-					$opc->index();
+					$sc = new AtendimentoController();
+					$sc->index();
 					
-					foreach ( $opc->clientes as $row ) {
+					foreach ( $sc->atendimentos as $row ) {
 						?>
 					<tr>
 						<td><?php echo $row[0]?></td>
 						<td><?php echo $row[1]?></td>
-						<td><?php echo $row[2] != "" ? $row[2] : "-"?></td>
-						<td><?php echo $row[3] != "" ? $row[3] : "-"?></td>
-						<td><?php echo $row[4] != "" ? $row[4] : "-"?></td>
-						<td><?php echo $row[5] != "" ? $row[5] : "-"?></td>
-						
-						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a> | <a href="edit.php?id=<?php echo $row[0]?>" class="label label-warning">editar</a> | <a href="javascript:destroy('<?php echo $row[0]?>');"
-							class="label label-danger"
-						>excluir</a></td>
+						<td><?php echo Atendimento::parseDataShow($row[3]); ?></td>
+						<td>-</td>
+						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a> | <a href="edit.php?id=<?php echo $row[0]?>" class="label label-warning">editar</a></td>
 					</tr>
 						<?php
 					}
@@ -75,7 +68,7 @@ $(document).ready(function() {
 				</table>
 			</div>
 			<div class="panel-footer">
-				<a href="new.php" class="btn btn-primary">Adicionar novo cliente</a>
+				<a href="new.php" class="btn btn-primary">Adicionar novo atendimento</a>
 			</div>
 		</div>
 	</div>

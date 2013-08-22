@@ -2,7 +2,6 @@
 include '../../constantes.php';
 require_once ROOT . 'views/template/header.php';
 require_once ROOT . 'views/template/header-menu.php';
-require_once ROOT . 'controllers/produto.php';
 ?>
 <div class="container">
 	<ol class="breadcrumb">

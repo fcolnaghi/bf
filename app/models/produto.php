@@ -1,16 +1,14 @@
 <?php
 
-require "db.php";
-
 class Produto {
 	
 	public $id;
 	public $nome;
 	public $descricao;
 	public $valor;
-	public $qtd;
+	public $qtd_estoque;
 	
-	public function all() {
+	public static function all() {
 		
 		try {
 			
@@ -24,7 +22,7 @@ class Produto {
 		
 	}
 	
-	public function unique($id) {
+	public static function unique($id) {
 	
 		try {
 				
@@ -39,7 +37,7 @@ class Produto {
 				$p->nome = $row[1];
 				$p->descricao = $row[2];
 				$p->valor = number_format(str_replace(",",".",$row[3]), 2, ',', '.');
-				$p->qtd = 0;
+				$p->qtd_estoque = $row[4];
 			}
 			
 			return $p;
@@ -69,11 +67,13 @@ class Produto {
 		try {
 	
 			$db = DB::getInstance();
-			$valor = str_replace(".", "",$produto->valor);
-			return $db->query("update produto set nome = '".$produto->nome."', descricao = '".$produto->descricao."', valor = '".$valor."' where id = ". $produto->id);
+			$valor = str_replace(",", ".",str_replace(".","",$produto->valor));
+			return $db->query("update produto set nome = '".$produto->nome."', descricao = '".$produto->descricao."', valor = ".$valor.", qtd_estoque=".$produto->qtd_estoque." where id = ". $produto->id);
 			
 		} catch(PDOException $e) {
 			echo "<div class='alert alert-danger'>Erro ao executar (".__METHOD__.")<br>[".$e->getMessage()."]</div>";
+			print_r($e);
+			die();
 			return false;
 		}
 	
@@ -86,7 +86,7 @@ class Produto {
 			$db = DB::getInstance();
 			$valor = str_replace(",", ".",str_replace(".","",$produto->valor));
 			
-			$db->query("insert into produto (nome, descricao, valor) values ('".$produto->nome."', '".$produto->descricao."', ".$valor.")");
+			$db->query("insert into produto (nome, descricao, valor, qtd_estoque) values ('".$produto->nome."', '".$produto->descricao."', '".$valor."', '".$produto->qtd_estoque."')");
 
 			return $db->lastInsertId();
 			

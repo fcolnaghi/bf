@@ -3,24 +3,24 @@ include '../../constantes.php';
 require_once ROOT . 'views/template/header.php';
 require_once ROOT . 'views/template/header-menu.php';
 
-$opc = new ProdutoController ();
+$opc = new ServicoController ();
 $opc->show ( $_GET ["id"] );
-$p = $opc->produto;
+$p = $opc->servico;
 
 ?>
 <div class="container">
 	<ol class="breadcrumb">
 		<li><a href="<?php echo ROOT?>home.php">Home</a></li>
-		<li><a href="<?php echo ROOT?>views/produtos/index.php">Produtos</a></li>
-		<li class="active">Visualização produto</li>
+		<li><a href="<?php echo ROOT?>views/servicos/index.php">Serviços</a></li>
+		<li class="active">Visualização serviço</li>
 	</ol>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Visualização do Produto</h3>
+			<h3 class="panel-title">Visualização do serviço</h3>
 		</div>
 		<div class="panel-body">
 			<div class="form-group">
-				<label class="control-label" for="nome">Produto</label> <input type="text" readonly="readonly" class="form-control" name="nome" id="nome" value="<?php echo $p->nome; ?>">
+				<label class="control-label" for="nome">Serviço</label> <input type="text" readonly="readonly" class="form-control" name="nome" id="nome" value="<?php echo $p->nome; ?>">
 			</div>
 			<div class="form-group">
 				<label for="nome">Descrição</label>
@@ -29,9 +29,6 @@ $p = $opc->produto;
 			<div class="row">
 				<div class="form-group col-md-2">
 					<label for="nome">Valor</label> <input readonly="readonly"  class="form-control money" type="text" name="valor" id="valor" value="<?php echo $p->valor; ?>">
-				</div>
-				<div class="form-group col-md-2">
-					<label for="nome">Quantidade</label><input readonly="readonly" class="form-control qtd" type="text" name="qtd" id="qtd" value="<?php echo $p->qtd_estoque; ?>">
 				</div>
 			</div>
 		</div>
