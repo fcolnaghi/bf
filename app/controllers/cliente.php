@@ -28,6 +28,11 @@ class ClienteController {
 	public static function destroy($id) {
 		Cliente::destroy($id);
 	}
+	
+	public function search($name) {
+		return Cliente::search($name);; 
+	}
+	
 }
 
 ?>

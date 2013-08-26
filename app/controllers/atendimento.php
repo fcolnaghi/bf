@@ -14,7 +14,7 @@ class AtendimentoController {
 	
 	public function create($atendimento) {
 		if($id = Atendimento::save($atendimento)) {
-			header("Location: edit.php?id=".$id."&msg=".urlencode("Atendimento incluido com sucesso!"));
+			header("Location: index.php?msg=".urlencode("Atendimento finalizado com sucesso!"));
 		}
 	}
 	

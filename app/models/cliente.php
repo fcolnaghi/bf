@@ -50,6 +50,29 @@ class Cliente {
 	
 	}
 	
+	public static function search($name) {
+	
+		try {
+	
+			$db = DB::getInstance();
+			
+			$stmt = $db->prepare('SELECT * FROM cliente where nome like "%'.$name.'%" order by nome asc');
+			$stmt->execute();
+			
+			$results = array();
+
+			while ( $cliente = $stmt->fetchObject('Cliente')) {
+				array_push($results, $cliente);
+			}
+			
+			return json_encode($results);
+	
+		} catch(PDOException $e) {
+			print_r($e);
+		}
+	
+	}
+	
 	public static function destroy($id) {
 	
 		try {

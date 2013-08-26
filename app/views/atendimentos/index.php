@@ -52,19 +52,15 @@ $(document).ready(function() {
 					$sc = new AtendimentoController();
 					$sc->index();
 					
-					foreach ( $sc->atendimentos as $row ) {
-						?>
+					foreach ( $sc->atendimentos as $row ) { ?>
 					<tr>
 						<td><?php echo $row[0]?></td>
 						<td><?php echo $row[1]?></td>
-						<td><?php echo Atendimento::parseDataShow($row[3]); ?></td>
-						<td>-</td>
-						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a> | <a href="edit.php?id=<?php echo $row[0]?>" class="label label-warning">editar</a></td>
+						<td><?php echo Atendimento::parseDataShow($row[2]); ?></td>
+						<td><?php echo number_format($row[3], 2, ",", "."); ?></td>
+						<td><a href="show.php?id=<?php echo $row[0]?>" class="label label-default">visualizar</a></td>
 					</tr>
-						<?php
-					}
-					
-					?>
+					<?php	}	?>
 				</table>
 			</div>
 			<div class="panel-footer">

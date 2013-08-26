@@ -2,11 +2,22 @@
 $sc = new AtendimentoController ();
 
 if (isset ( $_POST ['id'] )) {
+	
 	$atendimento = new Atendimento ();
 	
 	$atendimento->id_cliente = $_POST ['id_cliente'];
 	$atendimento->id_operador = $ops->id;
 	$atendimento->data_atendimento = $_POST['data_atendimento'];
+	
+	$atendimento->desconto = $_POST ['desconto'];
+	$atendimento->subtotal = $_POST ['subtotal'];
+	$atendimento->total = $_POST ['total'];
+	if(isset($_POST ['produtos'])) {
+		$atendimento->produtos = $_POST ['produtos'];
+	}
+	if(isset( $_POST ['servicos'])) {
+		$atendimento->servicos= $_POST ['servicos'];
+	}
 	
 	if ($_POST ['id'] != "") {
 		$atendimento->id = $_POST['id'];
@@ -26,11 +37,66 @@ if (isset ( $_GET ["id"] )) {
 }
 
 ?>
+<script>
+	var subTotal = 0;
+	var total = 0;
+	var desconto = 0;
+
+	function removeSubtotal(valor) {
+		subTotal -= parseFloat(valor);
+		
+		$("#subtotal").val(number_format(subTotal, 2, '.', ''));
+		$("#subtotal").removeAttr("readonly");
+		$("#subtotal").maskMoney({thousands: '.',	decimal: ','});
+		$("#subtotal").maskMoney('mask');
+		$("#subtotal").attr("readonly","readonly");
+
+		calculoTotal();
+	}
+	
+
+	function addSubtotal(valor) {
+		subTotal += parseFloat(valor);
+		
+		$("#subtotal").val(number_format(subTotal, 2, '.', ''));
+		$("#subtotal").removeAttr("readonly");
+		$("#subtotal").maskMoney({thousands: '.',	decimal: ','});
+		$("#subtotal").maskMoney('mask');
+		$("#subtotal").attr("readonly","readonly");
+
+		calculoTotal();
+	}
+
+	function calculoTotal() {
+		var des = $("#desconto").val();
+		var tot = number_format(parseFloat(subTotal - des.replace(".","").replace(",", ".")), 2, '.', '');
+
+		$("#total").val(tot);
+		$("#total").removeAttr("readonly");
+		$("#total").maskMoney({thousands: '.',	decimal: ','});
+		$("#total").maskMoney('mask');
+		$("#total").attr("readonly","readonly");
+		
+	}
+
+	function calculo(valor, qtd, campo) {
+
+		calc = number_format(parseFloat(valor * qtd.value), 2, '.', '');
+		
+		$(campo).val(calc);
+		$(campo).removeAttr("readonly");
+		$(campo).maskMoney({thousands: '.',	decimal: ','});
+		$(campo).maskMoney('mask');
+		$(campo).attr("readonly","readonly");
+		
+	}
+	
+</script>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?php echo $form_title; ?></h3>
 	</div>
-	<form method="POST">
+	<form method="POST" id="atendimento">
 		<div class="panel-body">
 			<div class="row">
 				<div class="form-group col-md-4">
@@ -93,13 +159,13 @@ if (isset ( $_GET ["id"] )) {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-2  pull-right">
-					<label class="control-label" for="nome">Total</label> <input type="text" class="form-control money" style="text-align: center" readonly="readonly" name="total" id="total" value="">
+					<label class="control-label" for="nome">Total</label> <input type="text" class="form-control money required" style="text-align: center" readonly="readonly" name="total" id="total" value="">
 				</div>
 				<div class="form-group col-md-2  pull-right">
-					<label class="control-label" for="nome">Desconto</label> <input type="text" class="form-control money" style="text-align: center" name="desconto" id="desconto" value="">
+					<label class="control-label" for="nome">Desconto</label> <input type="text" class="form-control money" style="text-align: center" name="desconto" id="desconto" onkeyup="calculoTotal();">
 				</div>
 				<div class="form-group col-md-2 pull-right">
-					<label class="control-label" for="nome">Sub-Total</label> <input type="text" class="form-control money" readonly="readonly" name="subtotal" id="subtotal" value="">
+					<label class="control-label" for="nome">Sub-Total</label> <input type="text" class="form-control money required" readonly="readonly" name="subtotal" id="subtotal" value="">
 				</div>
 			</div>
 			<input type="hidden" name="id" id="id" value="<?php echo $atendimento->id; ?>">
@@ -136,17 +202,20 @@ if (isset ( $_GET ["id"] )) {
 <!-- Modal -->
 <div class="modal" id="modalServico" tabindex="-1" role="dialog" aria-labelledby="modalServicoLabel" aria-hidden="true">
 	<div class="modal-dialog">
+		<form id="modalServico" class="form-inline">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Selecionar Serviço</h4>
 			</div>
-			<div class="modal-body"></div>
+			<div class="modal-body">
+				<?php include ROOT."views/servicos/_form_add_service.php"?>		
+			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" onclick="addServico()" class="btn btn-primary">Inserir serviço</button>
 			</div>
 		</div>
+		</form>
 		<!-- /.modal-content -->
 	</div>
 	<!-- /.modal-dialog -->
@@ -160,10 +229,11 @@ if (isset ( $_GET ["id"] )) {
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">Selecionar Produto</h4>
 			</div>
-			<div class="modal-body"></div>
+			<div class="modal-body">
+				<?php include ROOT."views/produtos/_form_add_product.php"?>		
+			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" onclick="addProduto()" class="btn btn-primary">Inserir produto</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
